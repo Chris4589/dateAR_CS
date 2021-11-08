@@ -1,0 +1,103 @@
+.Datear__background {
+  height: 100%;
+  width: 100%;
+  background-color: #f3f3f3;
+  font-family: 'poppins', sans-serif;
+  .Datear__header {
+    background: linear-gradient(
+    #024b18a1,
+    #00000088
+    ), url('https://www.wallpapertip.com/wmimgs/32-329526_game-banners-cs-go.jpg');
+  
+    background-position: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 60vh;
+    box-shadow: 1px 1px 1px 1px black;
+
+    color: white;
+
+    text-transform: uppercase;
+
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+
+    .nav {
+      width: 100%;
+      height: 10%;
+      /* height: auto; */
+      padding: 10px 0;
+      display: flex;
+      justify-content: flex-end;
+      ul {
+        display: flex;
+        list-style: none;
+        margin-top: 20px;
+        margin-right: 20px;
+        li {
+          margin-right: 2px;
+          .a {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+          }
+          .a:hover {
+            background-color: rgba(255, 255, 255, 0.411);
+          }
+        }
+      }
+    }
+    
+  }
+  .Datear__container {
+    padding: 40px 40px;
+    display: flex;
+    overflow: hidden;
+  }
+}
+
+.Datear__logo {
+  height: 90%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .Datear_logo_container {
+    display: flex;
+    flex-direction: column;
+    text-transform: none;
+    text-align: center;
+
+    .Datar__img {
+      background-image: url('../assets/datear_logo.png');
+      background-repeat: no-repeat;
+      background-position: 100%;
+      background-size: contain;
+      height: 150px;
+      width: 150px;
+      border-radius: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.Datear__table {
+  width: 70%;
+}
+
+.Datear__items {/* 
+  border: 1px solid rgb(133, 133, 133); */
+  border-radius: 8px;
+  height: 300px;
+  margin-bottom: 10px;
+  background-color: #ffff;
+  box-shadow: 1px 2px 4px 2px rgb(173, 173, 173);
+}
+
+.Datear__article {
+  /* border: 1px solid rgb(133, 133, 133); */
+  width: 30%;
+  height: 700px;
+}
