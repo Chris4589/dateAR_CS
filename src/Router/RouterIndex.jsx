@@ -7,6 +7,7 @@ import {
 import { Login } from '../auth/Login';
 import { Register } from '../auth/Register';
 import { Datear } from '../components/datear/Datear';
+import { RouterPanel } from './RouterPanel';
 
 export const RouterIndex = () => {
   return (
@@ -15,6 +16,7 @@ export const RouterIndex = () => {
         <Routes>
           <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/register" element={<Register/>}/>
+          <Route exact path="/dashboard" element={<RouterPanel/>}/>
           <Route exact path="/" element={<Datear/>}/>
         </Routes>
       </div>

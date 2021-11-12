@@ -43,7 +43,6 @@ export const Login = () => {
         <div className="Login__form-group">
           <FacebookLogin
             appId="61761974594342811"
-            autoLoad={true}
             textButton="   Entrar con Facebook"
             fields="name,email,picture"
             callback={responseFacebook}
