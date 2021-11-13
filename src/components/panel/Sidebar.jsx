@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 
-export const Sidebar = () => {
+export const Sidebar = ({className}) => {
+  
   return (
-    <div className="Dashboard__sidebar">
+    <div className={className}>
       <div className="Dashboard_User">
-        <img className="Dasboard_profile_image" src="https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2021/11/10/16365576942670.jpg" alt="" srcset="" />
+        <img className="Dasboard_profile_image" srcSet="https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2021/11/10/16365576942670.jpg" alt=""/>
         <h4 className="Dashboard_profile_name">mai enemi</h4>
       </div>
       <div className="Dashboard_myAccount">
@@ -31,9 +33,13 @@ export const Sidebar = () => {
 
       <div className="Dashboard_LogOut">
         <ul className="Dashboard_myOptions">
-          <li className><i className="fa fa-sign-out"></i> Logout </li>
+          <li><i className="fa fa-sign-out"></i> Logout </li>
         </ul>
       </div>
     </div>
   )
 }
+
+Sidebar.propTypes = {
+  className: PropTypes.string.isRequired,
+};

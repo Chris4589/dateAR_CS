@@ -16,7 +16,7 @@ export const RouterIndex = () => {
         <Routes>
           <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/register" element={<Register/>}/>
-          <Route exact path="/dashboard" element={<RouterPanel/>}/>
+          <Route exact path="/dashboard/*" element={<RouterPanel/>}/>
           <Route exact path="/" element={<Datear/>}/>
         </Routes>
       </div>
