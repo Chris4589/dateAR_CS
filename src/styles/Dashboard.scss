@@ -110,6 +110,61 @@
     overflow: hidden;
     /* overflow-x: hidden; */
     overflow-y: scroll;
+
+    .Ds__container {
+      margin-top: 20px;
+
+      .Ds_table {
+        overflow-x: scroll;
+
+        button {
+          float: right;
+          margin-bottom: 10px;
+          height: 35px;
+          width: 160px;
+          text-align: center;
+          border: 1px solid #dddddd;
+          border-radius: 8px;
+          background: #334ba1;
+          color: #f3f3f3;
+          cursor: pointer;
+
+          &:hover {
+            background: #2b418f;
+          }
+        }
+        table {
+          width: 100%;
+          overflow-x: scroll;
+          td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 4px 8px;
+            width: auto;
+            text-align: center;
+          }
+          
+          tr:nth-child(even) {
+            background-color: #dddddd;
+          }
+  
+          .fa-edit {
+            color: #334ba1;
+            cursor: pointer;
+          }
+          .fa-remove {
+            color: rgb(189, 8, 8);
+            cursor: pointer;
+          }
+          
+        }
+      }
+      
+      .DS__item_img {
+        height: 60px;
+        width: 60px;
+      }
+    }
   }
 }
 

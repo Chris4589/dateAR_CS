@@ -5,7 +5,7 @@ export const DatearItem = () => {
     <div className="Datear__items">
       <div className="Datear__item_server">
         <div className="Datear__item_header">
-          <img className="Datear__item_img" src="https://www.logolynx.com/images/logolynx/2d/2d3f515fd4452cbd01c18e0fb6149eb2.jpeg" alt="" srcset="" />
+          <img className="Datear__item_img" srcSet="https://www.logolynx.com/images/logolynx/2d/2d3f515fd4452cbd01c18e0fb6149eb2.jpeg" alt=""/>
           <h5 className="Datear__item_title">COMUNIDAD TUVIEJA</h5>
         </div>
         <div className="Datear__item_datas">
