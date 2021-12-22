@@ -27,6 +27,14 @@ export const FormAdmin = ({addModal}) => {
         </div>
 
         <div className="Modal__formGroup">
+          <label htmlFor="">Password</label>
+          <span className='Modal__inputgroup'>
+            <i className='	fas fa-user-secret'></i>
+            <input type="text" placeholder='Password' />
+          </span>
+        </div>
+
+        <div className="Modal__formGroup">
           <label htmlFor="">Type</label>
           <span className='Modal__inputgroup'>
             <i className='fab fa-typo3'></i>
@@ -38,10 +46,24 @@ export const FormAdmin = ({addModal}) => {
         </div>
 
         <div className="Modal__formGroup">
-          <label htmlFor="">Password</label>
+          <label htmlFor="">Server</label>
           <span className='Modal__inputgroup'>
-            <i className='	fas fa-user-secret'></i>
-            <input type="text" placeholder='Password' />
+            <i className='fas fa-server'></i>
+            <select name="" id="">
+              <option value="1">ZOMBIE ESCAPE</option>
+              <option value="2">CAPTURE THE FLAG</option>
+            </select>
+          </span>
+        </div>
+
+        <div className="Modal__formGroup">
+          <label htmlFor="">Role</label>
+          <span className='Modal__inputgroup'>
+            <i className='fab fa-critical-role'></i>
+            <select name="" id="">
+              <option value="1">STAFF</option>
+              <option value="2">ADMIN</option>
+            </select>
           </span>
         </div>
 

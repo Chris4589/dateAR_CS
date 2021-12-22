@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import { AdminRoles } from './AdminRoles';
 import { Admins } from './Admins';
 import { Panel } from './Panel';
 import { Servers } from './Servers';
@@ -15,6 +16,7 @@ export const Dashboard = () => {
         <Route exact path="/" element={<Panel/>}/>
         <Route exact path="/servers" element={<Servers/>}/>
         <Route exact path="/admins" element={<Admins/>}/>
+        <Route exact path="/admin-roles" element={<AdminRoles/>}/>
       </Routes>
     </div>
   )
