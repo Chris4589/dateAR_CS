@@ -1,12 +1,25 @@
 import React from 'react'
+import { useForm } from 'react-hook-form';
 import {
   Link,
 } from 'react-router-dom';
 
 export const Register = () => {
+
+  const { handleSubmit, register, formState:{ errors } } = useForm();
+
+  const validationsRegister = {
+    email: register('email', { required: true, minLength: 3}),
+    password: register('password', { required: true, minLength: 3 }),
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
+  }
+
   return (
     <div className="Login__container">
-      <form className="Login__form">
+      <form className="Login__form" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="Login__title">Register</h1>
 
         <div className="Login__form-group">
@@ -15,8 +28,15 @@ export const Register = () => {
             <span>
               <i className="fa fa-user Login__icon"/>
             </span>
-            <input type="text" className="Login__input" />
+            <input 
+              type="text" 
+              { ...validationsRegister.email } 
+              defaultValue='' 
+              className="Login__input" 
+            />
           </div>
+          { errors.email?.type === 'required' && <span>El usuario es requerido.</span> }
+          { errors.email?.type === 'minLength' && <span>El usuario necesita 3 caracteres o más.</span> }
         </div>
 
         <div className="Login__form-group">
@@ -25,8 +45,15 @@ export const Register = () => {
             <span>
               <i className="fa fa-eye Login__icon"/>
             </span>
-            <input type="text" className="Login__input" />
+            <input 
+              type="text" 
+              { ...validationsRegister.password } 
+              defaultValue='' 
+              className="Login__input" 
+            />
           </div>
+          { errors.password?.type === 'required' && <span>La contraseña es requerida.</span> }
+          { errors.password?.type === 'minLength' && <span>La contraseña necesita 3 caracteres o más.</span> }
         </div>
 
         <div className="Login__form-group">
