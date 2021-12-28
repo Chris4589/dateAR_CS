@@ -1,4 +1,6 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { useModal } from '../../Hooks/useModal';
 import { AdminTable } from './tables/AdminTable';
 import { DsTable } from './Utils/DsTable';
@@ -7,6 +9,71 @@ import { Modal } from './Utils/Modal';
 
 export const Admins = () => {
   const [ addModal, modalClass ] = useModal();
+  const { id, token } = useSelector(state => state.auth);
+  const [admins, setAdmins] = useState([]);
+  const [servers, setServers] = useState([]);
+  const [currenServer, setCurrenServer] = useState();
+  const mountedRef = useRef(true);
+  
+  const adms = useCallback(
+    async () => {
+      try {
+        if (currenServer === undefined) {
+          return setAdmins([]);
+        }
+        const data = await axios.get(`http://127.0.0.1:8000/api/user/${id}/server/${currenServer}/admin?user_id=${id}`, {
+          headers: {
+            'x-token': token
+          }
+        });
+        return data.data;
+      } catch (error) {
+        return 'error al cargar admins';
+      }
+    },
+    [id, token, currenServer],
+  );
+
+  const svs = useCallback(
+    () => {
+      return new Promise((resolve, reject) => {
+        axios.get(`http://127.0.0.1:8000/api/user/${id}/server?user_id=${id}`, {
+          headers: {
+            'x-token': token
+          } 
+        }).then(({data}) => !mountedRef.current ? null : resolve(data))
+          .catch(() => reject('error cargar svs'));
+      });
+    },
+    [id, token],
+  );
+  
+  useEffect(() => {
+    async function info() {
+
+      const sv = await svs();
+      setServers(sv?.msg);
+    };
+
+    info();
+    return () => {
+      mountedRef.current = false;
+    }
+  }, [svs]);
+
+  useEffect(() => {
+    async function info() {
+
+      const adm = await adms();
+      console.log(adm)
+      setAdmins(adm?.msg);
+    };
+
+    info();
+    return () => {
+      mountedRef.current = false;
+    }
+  }, [adms, currenServer]);
 
   const titles = [
     'ID',
@@ -15,24 +82,22 @@ export const Admins = () => {
     'EXPIRATION',
   ];
 
-  const admins = [
-    {
-      id: 1,
-      name: 'Hypnotize',
-      type: 1,
-      date: new Date().toUTCString(),
-    },
-    {
-      id: 2,
-      name: 'Randro',
-      type: 0,
-      date: new Date().toUTCString(),
-    },
-  ];
+  const onChange = (e) => {
+    if (!e.target.value) {
+      return;
+    }
+    setCurrenServer(e.target.value);
+  }
 
   return (
     <div>
       <div className="Ds__container">
+      <select onChange={onChange}>
+        {
+          !!servers && servers.map((sv) => (<option key={sv.id} value={sv.id}>{sv.name}</option>))
+        }
+        
+      </select>
       <DsTable component={AdminTable} titles={titles} items={admins} addModal={addModal}/>
 
       <Modal component={FormAdmin} addModal={addModal} modalClass={modalClass} />

@@ -2,22 +2,31 @@ import axios from 'axios';
 import React from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { useForm } from "react-hook-form";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { startLogin } from '../actions/login';
+import { usePassword } from '../Hooks/usePassword';
 
-export const Login = () => {
+export const Login = (props) => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const { password, showPassword } = usePassword();
+  const history = useNavigate();
+  const dispatch = useDispatch();
 
   const ValidationsLogin = {
-    email: register("email", { required: true, minLength:3 }),
+    email: register("email", { required: true, minLength:3, pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+      message: "invalid email address"
+    } }),
     password: register("password", { required: true, minLength:3 }),
   };
   
   const onSubmit = (data) => {
-    console.log(data)
+    dispatch(startLogin(data, history));
   };
 
   const responseFacebook = ({accessToken, userID}) => {
-    // 
     axios.post(`http://127.0.0.1:8000/api/users/auth/fb?accessToken=${accessToken}&userID=${userID}`)
     .then(() => console.log('loged'))
     .catch((e)=> console.log(JSON.stringify(e)));
@@ -37,15 +46,21 @@ export const Login = () => {
           </div>
           {errors.email?.type === 'required' && <span>El email es requerido.</span>}
           {errors.email?.type === 'minLength' && <span>El email requiere mas de 3 caracteres.</span>}
+          {errors.email?.type === 'pattern' && <span>Debe ser un email valido.</span>}
         </div>
 
         <div className="Login__form-group">
           <span className="Login__text_gray">Password:</span>
           <div className="Login__input-group Login__border">
             <span>
-              <i className="fa fa-eye Login__icon"/>
+              <i className="fa fa-eye Login__icon" onClick={() => showPassword()}/>
             </span>
-            <input type="text" { ...ValidationsLogin.password } defaultValue='' className="Login__input" />
+            <input 
+              type={password ? "text" : "password"}
+              { ...ValidationsLogin.password } 
+              defaultValue='' 
+              className="Login__input" 
+            />
           </div>
           {errors.password?.type === 'required' && <span>la contraseña es requerida.</span>}
           {errors.password?.type === 'minLength' && <span>La contraseña requiere 3 caracteres o más.</span>}

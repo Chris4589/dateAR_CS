@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { Provider } from 'react-redux';
+import { RouterIndex } from './Router/RouterIndex';
+import { store } from './store/store';
 import './styles/styles.scss';
 
 ReactDOM.render(
-    <App />,
+  <Provider store={store}>
+    <RouterIndex />
+  </Provider>,
   document.getElementById('root')
 );
 

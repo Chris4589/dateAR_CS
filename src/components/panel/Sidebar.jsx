@@ -1,18 +1,27 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../actions/login';
 
 export const Sidebar = ({className}) => {
+  const { username, foto, roles }  = useSelector(state => state.auth); 
+  const dispatch = useDispatch();
+
+  const thislogout = () => {
+    localStorage.removeItem(`token`);
+    dispatch(logout());
+  }
   
   return (
     <div className={className}>
       <div className="Dashboard_User">
-        <img className="Dasboard_profile_image" srcSet="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/89/897d7a6a36683fad4e373e95ddc26ad32843b089_full.jpg" alt=""/>
-        <h4 className="Dashboard_profile_name">CS-Mexico</h4>
+        <img className="Dasboard_profile_image" srcSet={foto} alt=""/>
+        <h4 className="Dashboard_profile_name">{ username }</h4>
       </div>
       <div className="Dashboard_myAccount">
         <p className="Dashboard_myRole">
-          MyAccount - ADMIN.
+          MyAccount - { roles?.map(rol => rol.name).includes('USUARIO') ? 'USUARIO' : 'ADMIN' }.
         </p>
       </div>
 
@@ -36,7 +45,7 @@ export const Sidebar = ({className}) => {
 
       <div className="Dashboard_LogOut">
         <ul className="Dashboard_myOptions">
-          <li><i className="fa fa-sign-out"></i> Logout </li>
+          <li onClick={thislogout}><i className="fa fa-sign-out"></i> Logout </li>
         </ul>
       </div>
     </div>

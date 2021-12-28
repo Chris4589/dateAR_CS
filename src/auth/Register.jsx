@@ -1,20 +1,44 @@
+import axios from 'axios';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import {
   Link,
 } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { usePassword } from '../Hooks/usePassword';
 
-export const Register = () => {
+export const Register = (props) => {
 
   const { handleSubmit, register, formState:{ errors } } = useForm();
+  const { password, showPassword } = usePassword();
 
   const validationsRegister = {
-    email: register('email', { required: true, minLength: 3}),
-    password: register('password', { required: true, minLength: 3 }),
+    username: register('username', { required: true, minLength: 5 }),
+    email: register('email', { required: true, minLength: 5, pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+      message: "invalid email address"
+    }}),
+    password: register('password', { required: true, minLength: 5 }),
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    axios.post(`http://127.0.0.1:8000/api/users`, data)
+      .then(() => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Tu cuenta se creo satisfactoriamente!',
+          showConfirmButton: false,
+          timer: 3500
+        });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'no se pudo crear tu cuenta!',
+        });
+      });
   }
 
   return (
@@ -30,30 +54,48 @@ export const Register = () => {
             </span>
             <input 
               type="text" 
+              { ...validationsRegister.username } 
+              defaultValue='' 
+              className="Login__input" 
+            />
+          </div>
+          { errors.username?.type === 'required' && <span>El usuario es requerido.</span> }
+          { errors.username?.type === 'minLength' && <span>El usuario necesita 5 caracteres o más.</span> }
+        </div>
+
+        <div className="Login__form-group">
+          <span className="Login__text_gray">User:</span>
+          <div className="Login__input-group Login__border">
+            <span>
+              <i className="fas fa-mail-bulk Login__icon"/>
+            </span>
+            <input 
+              type="text" 
               { ...validationsRegister.email } 
               defaultValue='' 
               className="Login__input" 
             />
           </div>
-          { errors.email?.type === 'required' && <span>El usuario es requerido.</span> }
-          { errors.email?.type === 'minLength' && <span>El usuario necesita 3 caracteres o más.</span> }
+          { errors.email?.type === 'required' && <span>El email es requerido.</span> }
+          { errors.email?.type === 'minLength' && <span>El email necesita 5 caracteres o más.</span> }
+          { errors.email?.type === 'pattern' && <span>Debe ser un email valido.</span> }
         </div>
 
         <div className="Login__form-group">
           <span className="Login__text_gray">Password:</span>
           <div className="Login__input-group Login__border">
             <span>
-              <i className="fa fa-eye Login__icon"/>
+              <i className="fa fa-eye Login__icon" onClick={() => showPassword()}/>
             </span>
             <input 
-              type="text" 
+              type={password ? "text" : "password"}
               { ...validationsRegister.password } 
               defaultValue='' 
               className="Login__input" 
             />
           </div>
           { errors.password?.type === 'required' && <span>La contraseña es requerida.</span> }
-          { errors.password?.type === 'minLength' && <span>La contraseña necesita 3 caracteres o más.</span> }
+          { errors.password?.type === 'minLength' && <span>La contraseña necesita 5 caracteres o más.</span> }
         </div>
 
         <div className="Login__form-group">

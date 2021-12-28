@@ -5,7 +5,7 @@ export const ServerTable = ({servers}) => {
   return (
     <tbody>
       {
-        servers.map((server)=>(
+        servers?.map((server)=>(
           <tr key={server.id}>
             <td>{server.id}</td>
             <td>

@@ -4,7 +4,7 @@ export const AdminRolesTable = ({servers}) => {
   return (
     <tbody>
       {
-        servers.map((admin)=>(
+        servers?.map((admin)=>(
           <tr key={admin.id}>
             <td>{admin.id}</td>
             <td>{admin.name}</td>
