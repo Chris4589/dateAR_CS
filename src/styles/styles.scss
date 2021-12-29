@@ -5,6 +5,45 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.Ds__container {
+    ul {
+        display: flex;
+        list-style: none;
+        width: 100%;
+        border: 1px solid red;
+        border: 0;
+        margin: 0;
+    }
+    
+    li {
+        display: block;
+        height: 20px;
+        width: auto;
+        padding: 1px 10px;
+        cursor: pointer;
+        border: 1px solid #dddddd;
+    }
+    
+    li a {
+        text-decoration: none;
+        color: black;
+    }
+    
+    ul .selected a {
+        font-weight: bold;
+        border-bottom: 2px solid black;
+    }
+    
+    ul .previous,
+    ul .next {
+        text-transform: uppercase;
+        background-color: #dddddd;
+    }
+    
+}
+
+  
 @import './Loader.scss';
 @import './Login.scss';
 @import './Datear.scss';

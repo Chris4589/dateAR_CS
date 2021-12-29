@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
 import { enviroments } from '../../enviroments';
 import { useModal } from '../../Hooks/useModal';
@@ -14,6 +15,8 @@ export const Admins = () => {
   const [admins, setAdmins] = useState([]);
   const [servers, setServers] = useState([]);
   const [currenServer, setCurrenServer] = useState();
+  const [lastPage, setlastPage] = useState(0);
+  const [currentPage, setcurrentPage] = useState(1);
   const mountedRef = useRef(true);
   
   const adms = useCallback(
@@ -22,7 +25,7 @@ export const Admins = () => {
         if (currenServer === undefined) {
           return setAdmins([]);
         }
-        const data = await axios.get(`${enviroments.address_host}/api/user/${id}/server/${currenServer}/admin?user_id=${id}`, {
+        const data = await axios.get(`${enviroments.address_host}/api/user/${id}/server/${currenServer}/admin?user_id=${id}&per_page=10&page=${currentPage}`, {
           headers: {
             'x-token': token
           }
@@ -32,7 +35,7 @@ export const Admins = () => {
         return 'error al cargar admins';
       }
     },
-    [id, token, currenServer],
+    [id, token, currenServer, currentPage],
   );
 
   const svs = useCallback(
@@ -70,7 +73,9 @@ export const Admins = () => {
     async function info() {
 
       const adm = await adms();
-      setAdmins(adm?.msg);
+      setAdmins(adm?.msg?.data);
+      setlastPage(adm?.msg?.last_page || 1);
+      setcurrentPage(adm?.msg?.current_page ||1);
     };
 
     info();
@@ -93,6 +98,13 @@ export const Admins = () => {
     setCurrenServer(e.target.value);
   }
 
+  const handlePageClick = (event) => {
+    if (event.selected+1 < 0) {
+      return;
+    }
+    setcurrentPage(event.selected+1);
+  }
+
   return (
     <div>
       <div className="Ds__container">
@@ -103,7 +115,15 @@ export const Admins = () => {
         
       </select>
       <DsTable component={AdminTable} titles={titles} items={admins} addModal={addModal}/>
-
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel=">"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={3}
+        pageCount={lastPage}
+        previousLabel="<"
+        renderOnZeroPageCount={null}
+      />
       <Modal component={FormAdmin} addModal={addModal} modalClass={modalClass} />
     </div>
     </div>
