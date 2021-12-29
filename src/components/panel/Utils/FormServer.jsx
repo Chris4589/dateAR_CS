@@ -1,9 +1,14 @@
+import axios from 'axios';
 import React from 'react'
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import { enviroments } from '../../../enviroments';
 
 export const FormServer = ({addModal}) => {
 
   const { register, reset, handleSubmit, formState:{ errors } } = useForm();
+  const { id, token } = useSelector(state => state.auth);
 
   const formValidation = {
     name: register('name', { required: true, minLength: 8 }),
@@ -13,8 +18,27 @@ export const FormServer = ({addModal}) => {
   };
 
   const ModalSubmit = (data) => {
-    console.log(data);
+    axios.post(`${enviroments.address_host}/api/server?user_id=${id}`, data, {
+      headers: {
+        'x-token': token
+      }
+    }).then( ()=> Swal.fire('Se creo correctamente'))
+      .catch((res) => Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: res.response.data.msg,
+      }));
   };
+
+  const cancel = () => {
+    reset({
+      name: '',
+      description: '',
+      ip: '',
+      foto: null
+    });
+    addModal();
+  }
   
   return (
     <div className='Modal__form'>
@@ -61,7 +85,7 @@ export const FormServer = ({addModal}) => {
         </div>
 
         <div className="Modal_groupBtn">
-          <button className='btn btn-cancel' onClick={addModal}>Cancel</button>
+          <button className='btn btn-cancel' onClick={cancel}>Cancel</button>
           <button className='btn btn-primary'>Add</button>
         </div>
 

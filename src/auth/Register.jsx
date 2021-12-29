@@ -5,6 +5,7 @@ import {
   Link,
 } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { enviroments } from '../enviroments';
 import { usePassword } from '../Hooks/usePassword';
 
 export const Register = (props) => {
@@ -22,7 +23,7 @@ export const Register = (props) => {
   };
 
   const onSubmit = (data) => {
-    axios.post(`http://127.0.0.1:8000/api/users`, data)
+    axios.post(`${enviroments.address_host}/api/users`, data)
       .then(() => {
         Swal.fire({
           position: 'top-end',
@@ -36,7 +37,7 @@ export const Register = (props) => {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'no se pudo crear tu cuenta!',
+          text: err.response.data.msg,
         });
       });
   }

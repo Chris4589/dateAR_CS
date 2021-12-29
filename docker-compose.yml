@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  react:
+    container_name: react-front
+    build: .
+    image: react-front:1
+    ports:
+      - "5190:3000" 
+    networks:
+      - svl-front
+networks:
+  svl-front:

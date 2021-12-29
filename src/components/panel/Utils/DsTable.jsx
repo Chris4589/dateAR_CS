@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const DsTable = ({component:Component, titles, items, addModal}) => {
+export const DsTable = ({component:Component, token, titles, items, addModal, user_id, fnFresh}) => {
 
   return (
     <div className="Ds_table">
@@ -20,7 +20,7 @@ export const DsTable = ({component:Component, titles, items, addModal}) => {
             <th>Delete</th>
           </tr>
         </thead>
-        <Component servers={items}/>
+        <Component servers={items} token={token} user_id={user_id} fnFresh={fnFresh}/>
       </table>
 
       

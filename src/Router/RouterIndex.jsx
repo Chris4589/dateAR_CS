@@ -7,6 +7,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
+import { enviroments } from '../enviroments';
 import { login } from '../actions/login';
 import { Login } from '../auth/Login';
 import { Register } from '../auth/Register';
@@ -21,7 +22,7 @@ export const RouterIndex = () => {
   const [IsLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
-    axios.post(`http://127.0.0.1:8000/api/users/auth/token`, {}, { 
+    axios.post(`${enviroments.address_host}/api/users/auth/token`, {}, { 
       headers: {
         'x-token': localStorage.getItem(`token`)
       }

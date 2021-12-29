@@ -3,7 +3,7 @@ import React from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { enviroments } from '../enviroments';
 import { startLogin } from '../actions/login';
 import { usePassword } from '../Hooks/usePassword';
 
@@ -11,7 +11,6 @@ export const Login = (props) => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { password, showPassword } = usePassword();
-  const history = useNavigate();
   const dispatch = useDispatch();
 
   const ValidationsLogin = {
@@ -23,11 +22,11 @@ export const Login = (props) => {
   };
   
   const onSubmit = (data) => {
-    dispatch(startLogin(data, history));
+    dispatch(startLogin(data));
   };
 
   const responseFacebook = ({accessToken, userID}) => {
-    axios.post(`http://127.0.0.1:8000/api/users/auth/fb?accessToken=${accessToken}&userID=${userID}`)
+    axios.post(`${enviroments.address_host}/api/users/auth/fb?accessToken=${accessToken}&userID=${userID}`)
     .then(() => console.log('loged'))
     .catch((e)=> console.log(JSON.stringify(e)));
   }
@@ -74,7 +73,7 @@ export const Login = (props) => {
 
         <div className="Login__form-group">
           <FacebookLogin
-            appId="61761974594342811"
+            appId="6176197459434281"
             textButton="   Entrar con Facebook"
             fields="name,email,picture"
             callback={responseFacebook}

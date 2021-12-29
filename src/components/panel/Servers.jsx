@@ -6,6 +6,7 @@ import { Modal } from './Utils/Modal';
 import { FormServer } from './Utils/FormServer';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { enviroments } from '../../enviroments';
 
 export const Servers = () => {
 
@@ -18,7 +19,7 @@ export const Servers = () => {
   const svs = useCallback(
     () => {
       return new Promise((resolve, reject) => {
-        axios.get(`http://127.0.0.1:8000/api/user/${id}/server?user_id=${id}`, {
+        axios.get(`${enviroments.address_host}/api/user/${id}/server?user_id=${id}`, {
           headers: {
             'x-token': token
           } 
@@ -46,7 +47,7 @@ export const Servers = () => {
 
   return (
     <div className="Ds__container">
-      <DsTable component={ServerTable} titles={titles} items={servers} addModal={addModal}/>
+      <DsTable component={ServerTable} token={token} titles={titles} items={servers} addModal={addModal} user_id={id} fnFresh={svs}/>
 
       <Modal component={FormServer} addModal={addModal} modalClass={modalClass} />
     </div>

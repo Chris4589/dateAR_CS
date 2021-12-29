@@ -1,10 +1,11 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { enviroments } from "../enviroments";
 import { types } from "../types/types";
 
-export const startLogin = (data, history) => {
+export const startLogin = (data) => {
   return (dispatch) => {
-    axios.post(`http://127.0.0.1:8000/api/users/auth`, data)
+    axios.post(`${enviroments.address_host}/api/users/auth`, data)
       .then(({data}) => {
         Swal.fire({
           position: 'top-end',
@@ -15,13 +16,12 @@ export const startLogin = (data, history) => {
         });
         localStorage.setItem(`token`, data.msg.token);//token
         dispatch(login(data.msg));
-        history('/dashboard');
       })
       .catch((e) => {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'no se pudo encontrar tu cuenta!',
+          text: e.response.data.msg,
         });
       });
   }

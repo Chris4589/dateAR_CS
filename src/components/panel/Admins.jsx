@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { enviroments } from '../../enviroments';
 import { useModal } from '../../Hooks/useModal';
 import { AdminTable } from './tables/AdminTable';
 import { DsTable } from './Utils/DsTable';
@@ -21,7 +22,7 @@ export const Admins = () => {
         if (currenServer === undefined) {
           return setAdmins([]);
         }
-        const data = await axios.get(`http://127.0.0.1:8000/api/user/${id}/server/${currenServer}/admin?user_id=${id}`, {
+        const data = await axios.get(`${enviroments.address_host}/api/user/${id}/server/${currenServer}/admin?user_id=${id}`, {
           headers: {
             'x-token': token
           }
@@ -37,7 +38,7 @@ export const Admins = () => {
   const svs = useCallback(
     () => {
       return new Promise((resolve, reject) => {
-        axios.get(`http://127.0.0.1:8000/api/user/${id}/server?user_id=${id}`, {
+        axios.get(`${enviroments.address_host}/api/user/${id}/server?user_id=${id}`, {
           headers: {
             'x-token': token
           } 
@@ -53,6 +54,10 @@ export const Admins = () => {
 
       const sv = await svs();
       setServers(sv?.msg);
+
+      if (sv?.msg.length !== 0) {
+        setCurrenServer(sv?.msg[0].id);
+      }
     };
 
     info();
@@ -65,7 +70,6 @@ export const Admins = () => {
     async function info() {
 
       const adm = await adms();
-      console.log(adm)
       setAdmins(adm?.msg);
     };
 

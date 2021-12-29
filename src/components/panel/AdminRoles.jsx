@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { enviroments } from '../../enviroments';
 import { useModal } from '../../Hooks/useModal';
 import { AdminRolesTable } from './tables/AdminRolesTable';
 import { DsTable } from './Utils/DsTable';
@@ -17,7 +18,7 @@ export const AdminRoles = () => {
   const rangos = useCallback(
     () => {
       return new Promise((resolve, reject) => {
-        axios.get(`http://127.0.0.1:8000/api/users/${id}/rangos?user_id=${id}`, {
+        axios.get(`${enviroments.address_host}/api/users/${id}/rangos?user_id=${id}`, {
           headers: {
             'x-token': token
           }
